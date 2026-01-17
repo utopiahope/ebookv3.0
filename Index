@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ebook + Botpress</title>
+
+  <style>
+    /* 1. Giữ nguyên cấu hình Ebook của bạn */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    iframe[src*="heyzine.com"] {
+      width: 100%;
+      height: 100vh;
+      border: none;
+      display: block;
+      /* Đặt z-index thấp để Botpress luôn nổi lên trên */
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <iframe
+    src="https://heyzine.com/flip-book/534d4608bc.html"  
+    allowfullscreen
+    allow="clipboard-write"
+    scrolling="no">
+  </iframe>
+
+  <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/01/17/05/20260117053637-2BJKOGRR.js" defer></script>
+
+  <script>
+    function fixBotSize() {
+      // Tìm tất cả các thẻ DIV để bắt giao diện Botpress
+      const allDivs = document.body.querySelectorAll('div');
+      
+      allDivs.forEach(div => {
+        // Nếu tìm thấy giao diện Botpress (có Shadow DOM)
+        if (div.shadowRoot) {
+            // Dùng lệnh ZOOM 0.75 để thu nhỏ toàn bộ widget còn 75%
+            // Cách này an toàn hơn scale vì không làm vỡ giao diện
+            div.style.setProperty('zoom', '0.75', 'important');
+            
+            // Cố định vị trí góc phải dưới
+            div.style.setProperty('position', 'fixed', 'important');
+            div.style.setProperty('bottom', '20px', 'important');
+            div.style.setProperty('right', '20px', 'important');
+            
+            // Đảm bảo hiển thị (Chống lỗi biến mất)
+            div.style.setProperty('display', 'block', 'important');
+            div.style.setProperty('visibility', 'visible', 'important');
+            div.style.setProperty('z-index', '9999', 'important');
+        }
+      });
+    }
+
+    // Chạy kiểm tra liên tục trong 10 giây đầu để đảm bảo Bot nhận lệnh
+    const checker = setInterval(fixBotSize, 500);
+    setTimeout(() => clearInterval(checker), 10000);
+  </script>
+
+</body>
+</html>
